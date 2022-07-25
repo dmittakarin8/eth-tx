@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Transaction Details</title>
+</head>
+<body>
+    <h1>Transaction Details</h1>
+    <h2><%= transactionHash %> </h1>
+    <p>
+        <!--  JSON.stringify(fullTransaction)  -->
+       </p>
+       <p>
+        <%= to %>
+       </p>
+       <hr>
+       <% for (let log of logs) { %>
+        <article>
+            <% for (let topic of log.topics) { %>
+                <p><%= topic %></p>
+            <% } %> 
+        </article>
+       <%}%> 
+
+</body>
+</html>
