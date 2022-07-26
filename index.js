@@ -1,5 +1,11 @@
+//take first topic entry and use that as a header
+//count the number of logs and topics
+
+
+
 const express = require('express');
 const ethers = require('ethers');
+const ejsMate = require('ejs-mate');
 require('dotenv').config();
 
 //setup api----------------------------------
@@ -12,6 +18,7 @@ const app = express();
 const path = require('path');
 
 //set view engine and views directory-----------------------------------
+app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, '/views'))
 

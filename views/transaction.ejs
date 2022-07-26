@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Transaction Details</title>
-</head>
+<% layout('layouts/boilerplate') %>
 <body>
     <h1>Transaction Details</h1>
     <h2><%= transactionHash %> </h1>
@@ -16,13 +9,22 @@
         <%= to %>
        </p>
        <hr>
+       <h4>There are <%= logs.length %> log entries for this transaction</h4>
        <% for (let log of logs) { %>
         <article>
+            <!-- if length of topics array equals 4, then check to see if 1st topic is a Transfer event if it is we have an erc721 transfer.  
+            Last topic will be token ID.   -->
             <% for (let topic of log.topics) { %>
-                <p><%= topic %></p>
+                <% if (log.topics.length == 4) { %> 
+                    <% if (topic == transferSignatureHash) { %>
+                       <p>This is an ERC721 transfer event: <%= topic %></p>
+                    <% } else { %> 
+                       <p>This is NOT a transfer event: <%= topic %></p>
+                    <% } %> 
+                <% } %> 
             <% } %> 
         </article>
+        <hr>
        <%}%> 
 
 </body>
-</html>
