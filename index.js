@@ -1,8 +1,5 @@
 //take first topic entry and use that as a header
 //count the number of logs and topics
-
-
-
 const express = require('express');
 const ethers = require('ethers');
 const ejsMate = require('ejs-mate');
@@ -16,7 +13,8 @@ let provider = new ethers.providers.AlchemyProvider('homestead',process.env.ALCH
 //setup express-----------------------------------
 const app = express();
 const path = require('path');
-
+app.use(express.urlencoded({ extended: true}))
+// app.use(express.json)
 //set view engine and views directory-----------------------------------
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs')
@@ -38,12 +36,26 @@ app.get('/', (req,res) => {
     res.render('home')
 })
 
+// app.get('/transaction', async (req,res) => {
+//     if (transactionHash) {
+//         const { transactionHash } = (req.query)
+//         const fullTransaction = await provider.getTransactionReceipt(transactionHash)
+//         console.log(fullTransaction)
+//         res.render('transaction', {...fullTransaction, transactionHash, transferSignatureHash})
+//     }
+//         // res.render('transaction')
+// })
+
 app.get('/transaction/:transactionHash', async (req,res) => {
     const {transactionHash} = req.params;
     const fullTransaction = await provider.getTransactionReceipt(transactionHash)
     console.log(fullTransaction)
     res.render('transaction', {...fullTransaction, transactionHash, transferSignatureHash})
 })
+
+async function connectWallet() {
+    console.log("Connect Account")
+}
 
 app.listen(3000, ()=> {
     console.log('Serving on port 3000')

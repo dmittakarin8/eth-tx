@@ -1,29 +1,33 @@
 <% layout('layouts/boilerplate') %>
 <body>
-    <h1>Transaction Details</h1>
-    <h2><%= transactionHash %> </h1>
+    <!-- <form action="/transaction" method="GET">
+        <input type="text" name="transactionHash">
+        <button>Submit</button>
+    </form> -->
+    <h1>Exploring Transaction Details</h1>
+    <h3>Enter transaction hash.  Route:  /transaction/:transaction</h3>
+    <hr>
+    <h4>Details for Transaction Hash:</h4>
+    <h4><%= transactionHash %> </h4>
+    <hr>
     <p>
         <!--  JSON.stringify(fullTransaction)  -->
        </p>
-       <p>
-        <%= to %>
-       </p>
        <hr>
-       <h4>There are <%= logs.length %> log entries for this transaction</h4>
+       <h5>There are <%= logs.length %> log entries for this transaction</h5>
+       <hr>
        <% for (let log of logs) { %>
-        <article>
+        <div class="bg-dark text-white">
             <!-- if length of topics array equals 4, then check to see if 1st topic is a Transfer event if it is we have an erc721 transfer.  
             Last topic will be token ID.   -->
             <% for (let topic of log.topics) { %>
-                <% if (log.topics.length == 4) { %> 
                     <% if (topic == transferSignatureHash) { %>
-                       <p>This is an ERC721 transfer event: <%= topic %></p>
+                       <pre class="bg-success">This is an ERC721 transfer event: <%= topic %></pre>
                     <% } else { %> 
-                       <p>This is NOT a transfer event: <%= topic %></p>
+                       <pre>This is NOT a transfer event: <%= topic %></pre>
                     <% } %> 
-                <% } %> 
             <% } %> 
-        </article>
+                    </div>
         <hr>
        <%}%> 
 
